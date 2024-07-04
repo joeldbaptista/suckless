@@ -1,0 +1,19 @@
+// Dependency Graph
+digraph {
+	"util.c"
+	"util.c" -> "util.h"
+	"drw.c"
+	"drw.c" -> "util.h"
+	"drw.c" -> "drw.h"
+	"dmenu.c"
+	"dmenu.c" -> "util.h"
+	"dmenu.c" -> "config.h"
+	"dmenu.c" -> "drw.h"
+	"arg.h"
+	"drw.h"
+	"config.def.h"
+	"config.h"
+	"stest.c"
+	"stest.c" -> "arg.h"
+	"util.h"
+}
