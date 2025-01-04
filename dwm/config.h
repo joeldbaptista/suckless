@@ -2,7 +2,7 @@
 #include <X11/XF86keysym.h>
 
 /*
- * TODO: change this
+ * TODO: change this - move to header etc
  * */
 #include "movestack.c"
 #include "gaplessgrid.c"
@@ -16,8 +16,10 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "hack:size=10" };
-static const char dmenufont[]       = "hack:size=10";
+//static const char *fonts[]          = { "hack:size=10" };
+static const char *fonts[]          = { "terminus:size=12" };
+//static const char dmenufont[]       = "hack:size=10";
+static const char dmenufont[]       = "terminus:size=12";
 static const char col_gray0[]       = "#111111";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -34,8 +36,10 @@ static const char *colors[][3]      = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+/*
+ * TODO: change this - move to header etc
+ * */
 #include "shiftview.c"
-//#include "nextpagetag.c"
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -55,8 +59,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	/* first entry is default */
-	{ "[]",       monocle },
+	{ "[]",      monocle }, /* first entry is default */
 	{ " ",      tile },
 	{ " ",      NULL },    /* no layout function means floating behavior */
 	{ "",       gaplessgrid },
@@ -76,18 +79,11 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", 
-		"-m", dmenumon, 
-		"-fn", dmenufont, 
-		"-nb", col_gray1, 
-		"-nf", col_gray3, 
-		"-sb", col_cyan, 
-		"-sf", col_gray4, 
-		NULL 
+static const char *dmenucmd[] = { "dmenu_run",
+		"-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3,
+		"-sb", col_cyan, "-sf", col_gray4, NULL
 };
-//static const char *termcmd[] = { "st", "-e", "tmux", NULL };
 static const char *termcmd[] = { "st", NULL };
-//static const char *ftermcmd[] = { "st", "-n", "fterm", "-g", "120x34", "-e", "tmux", NULL };
 static const char *ftermcmd[] = { "st", "-n", "fterm", "-g", "120x34",  NULL };
 static const char *nnn[] = { "st", "-n", "fterm", "-g", "120x34", "-e", "nnn", NULL };
 
@@ -95,10 +91,10 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 
-	{ MODKEY|ShiftMask,	        	XK_Return, spawn,          {.v = termcmd  } },
-	{ MODKEY,		        		XK_Return, spawn,          {.v = ftermcmd  } },
-	
-	{ MODKEY,		        		XK_n, spawn,          {.v = nnn } },
+	{ MODKEY|ShiftMask,	        XK_Return, spawn,          {.v = termcmd  } },
+	{ MODKEY,			XK_Return, spawn,          {.v = ftermcmd  } },
+
+	{ MODKEY,			XK_n, 	   spawn,          {.v = nnn } },
 
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 
@@ -115,10 +111,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 
 	{ MODKEY|ShiftMask,             XK_z, 	   zoom,           {0} },
-	//{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_Tab,    focusstack,     {.i = +1 } },
-	{ MODKEY,              			XK_backslash,    shiftviewclients,  {.i = +1} },
-	{ MODKEY,	                	XK_q,      killclient,     {0} },
+
+	{ MODKEY,                       XK_Tab,    	focusstack,        {.i = +1 } },
+	{ MODKEY,              		XK_backslash,   shiftviewclients,  {.i = +1} },
+	{ MODKEY,	 		XK_q,      	killclient,        {0} },
 
 	/* Control layouts */
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[0]} },
@@ -126,8 +122,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
 
-	{ ALTKEY,              			XK_Tab,    shiftviewclients,  {.i = +1} },
-	{ ALTKEY,              			XK_backslash,    shiftviewclients,  {.i = -1} },
+	{ ALTKEY,              		XK_Tab,    	shiftviewclients,  {.i = +1} },
+	{ ALTKEY,              		XK_backslash,   shiftviewclients,  {.i = -1} },
 
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
@@ -144,8 +140,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 
 	/* Brightness control */
-	{ 0, XF86XK_MonBrightnessUp,	spawn,	SHCMD("sudo xbacklight -inc 1") },
-	{ 0, XF86XK_MonBrightnessDown,	spawn,	SHCMD("sudo xbacklight -dec 1") },
+	{ 0, XF86XK_MonBrightnessUp,	spawn,	SHCMD("sudo xbacklight -inc 3") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,	SHCMD("sudo xbacklight -dec 3") },
 
 	/* Volume control */
 	{ 0, XF86XK_AudioMute, 		  spawn, SHCMD("amixer set 'Master' toggle ; kill -44 $(pidof dwmblocks)")},

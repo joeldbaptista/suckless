@@ -18,7 +18,7 @@ shiftviewclients(const Arg *arg)
 	#else
 	shifted.ui = selmon->tagset[selmon->seltags];
 	#endif // SCRATCHPADS_PATCH
-	if (arg->i > 0) // left circular shift
+	if (arg->i > 0) { // left circular shift
 		do {
 			shifted.ui = (shifted.ui << arg->i)
 			   | (shifted.ui >> (LENGTH(tags) - arg->i));
@@ -26,7 +26,7 @@ shiftviewclients(const Arg *arg)
 			shifted.ui &= ~SPTAGMASK;
 			#endif // SCRATCHPADS_PATCH
 		} while (tagmask && !(shifted.ui & tagmask));
-	else // right circular shift
+	} else { // right circular shift
 		do {
 			shifted.ui = (shifted.ui >> (- arg->i)
 			   | shifted.ui << (LENGTH(tags) + arg->i));
@@ -34,7 +34,7 @@ shiftviewclients(const Arg *arg)
 			shifted.ui &= ~SPTAGMASK;
 			#endif // SCRATCHPADS_PATCH
 		} while (tagmask && !(shifted.ui & tagmask));
-
+	}
 	view(&shifted);
 }
 

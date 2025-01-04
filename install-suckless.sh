@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eu
 
 cd dwm && make && sudo make install && make clean && cd ..
 cd st && make && sudo make install && make clean && cd ..
@@ -9,4 +9,3 @@ cd nnn && make && sudo make install && make clean && cd ..
 cd dwmblocks && make && sudo make install && make clean && cd ..
 cd slock && make && sudo make install && make clean && cd ..
 
-# Change backlight permissions to 766

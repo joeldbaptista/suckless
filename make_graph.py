@@ -8,7 +8,7 @@ from graphviz import Digraph
 def read_dir_path():
     parser = argparse.ArgumentParser(
         description='Process the path to a directory.'
-    ) 
+    )
     parser.add_argument(
         'dir_path', type=str, help='The path to the directory.',
     )
